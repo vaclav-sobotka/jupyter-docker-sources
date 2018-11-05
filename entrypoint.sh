@@ -73,7 +73,7 @@ for TUPLE in $(IFS=';'; echo $MAPPINGS); do
 	processTuple "$LOCAL_FOLDER" "$BUCKET_SUBFOLDER" "$DATA_FOLDER" "$BUCKET_NAME";
 done
 
-chown -R "$NB_USER:users" "$DATA_FOLDER"
+chown -R "$NB_USER:$NB_USER" "$DATA_FOLDER"
 
 BASHRC_PATH="/home/$NB_USER/.bashrc";
 SYNC_UP_ALIAS='alias sync-up="sudo -E /root/jupyter-docker-sources/sync-mappings-up"';
