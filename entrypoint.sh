@@ -32,6 +32,10 @@ function checkArgs {
 		echo "AWS_SECRET_ACCESS_KEY env variable was not set. Terminating the startup!";
 		exit 1;	
 	fi
+	if [ -z "$PASSWORD" ]; then
+		echo "PASSWORD env variable was not set. Terminating the startup!";
+		exit 1;
+	fi
 }
 
 checkArgs;
@@ -83,4 +87,4 @@ if [ -z $(grep "$SYNC_DOWN_ALIAS" "$BASHRC_PATH") ]; then
 	echo "$SYNC_DOWN_ALIAS" >> "$BASHRC_PATH";
 fi
 
-start-notebook.sh
+start-notebook.sh --NotebookApp.password="$PASSWORD";
