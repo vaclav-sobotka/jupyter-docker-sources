@@ -24,12 +24,19 @@ function checkArgs {
 		echo "BUCKET_NAME parameter was not set when running 'docker run'! Terminating the startup!";
 		exit 1;
 	fi
+	if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+		echo "AWS_ACCESS_KEY_ID env variable was not set. Terminating the startup!";
+		exit 1;
+	fi
+	if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+		echo "AWS_SECRET_ACCESS_KEY env variable was not set. Terminating the startup!";
+		exit 1;	
+	fi
 }
 
 checkArgs;
 
-DATA_DIR_NAME="Roaming";
-DATA_FOLDER="/home/$NB_USER/$DATA_DIR_NAME";
+DATA_FOLDER="/home/$NB_USER/Roaming";
 MAPPING_FILE="/root/.mappings";
 
 mkdir -p "$DATA_FOLDER";
@@ -65,8 +72,8 @@ done
 chown -R "$NB_USER:users" "$DATA_FOLDER"
 
 BASHRC_PATH="/home/$NB_USER/.bashrc";
-SYNC_UP_ALIAS='alias sync-up="sudo -E /root/sync-mappings-up"';
-SYNC_DOWN_ALIAS='alias sync-down="sudo -E /root/sync-mappings-down"';
+SYNC_UP_ALIAS='alias sync-up="sudo -E /root/jupyter-docker-sources/sync-mappings-up"';
+SYNC_DOWN_ALIAS='alias sync-down="sudo -E /root/jupyter-docker-sources/sync-mappings-down"';
 
 if [ -z $(grep "$SYNC_UP_ALIAS" "$BASHRC_PATH") ]; then
 	echo "$SYNC_UP_ALIAS" >> "$BASHRC_PATH";
